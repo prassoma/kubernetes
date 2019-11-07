@@ -1,0 +1,36 @@
+# This yaml is to create pv and pvc objects from a pre-populated
+# google persistentDisk.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  # Name of the volume. It can be anything
+  name: mysql-volume
+  labels:
+    app: wordpress
+spec:
+  # A name for the storageClass. It can be anything.
+  # This name is used for pv-pvc binding along with 'capacity/storage' key.
+  storageClassName: generic
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadWriteOnce
+  gcePersistentDisk:
+    # GCE persistent Disk name. This is the name of the google persistent disk.
+    pdName: my-data-disk
+#    fsType: ext4
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: wordpress
+spec:
+  storageClassName: generic # Should match with PV
+  accessModes:
+    - ReadWriteOnce
+  volumeName: mysql-volume # Should match with PV
+  resources:
+    requests:
+      storage: 5Gi

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-env-from-cm
+  namespace: default
+
+data:
+  MYSQL_USER: dbuser
+  MYSQL_DATABASE: testdb
+  WORDPRESS_DB_HOST: wordpress-mysql

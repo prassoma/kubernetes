@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mytest-volume1
+  labels:
+    app: mytest
+spec:
+  storageClassName: generic
+  capacity:
+    storage: 2Gi
+  accessModes:
+  - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: my-test-disk
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mytest-volume2
+  labels:
+    app: mytest
+spec:
+  storageClassName: generic
+  capacity:
+    storage: 2Gi
+  accessModes:
+  - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: my-test-disk2
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mytest-volume-claim
+  labels:
+    app: mytest
+spec:
+  storageClassName: generic
+  accessModes:
+    - ReadWriteOnce
+  volumeName: mytest-volume1
+  resources:
+    requests:
+      storage: 2Gi
